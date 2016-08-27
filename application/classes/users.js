@@ -1,12 +1,5 @@
-/*
- Добавлять пользователей
- Распределять роли
- Убивать пользователей
- Блокировать чат пользователям (чтение и запись)
- */
-
 /**
- * Управления пользователями
+ * Управление пользователями
  * @class
  */
 class Users {
@@ -112,27 +105,4 @@ class Users {
     }
 }
 
-
-var users = new Users(null, roles);
-users.add({
-    id: 33,
-    name: 'Alina',
-    discordApp: {}
-});
-users.add({
-    id: 35,
-    name: 'Richard',
-    discordApp: {}
-});
-users.add({
-    id: 22,
-    name: 'Pavel',
-    discordApp: {}
-});
-users.add({
-    id: 22,
-    name: 'Mercedes',
-    discordApp: {}
-});
-
-console.log(users.get({}));
+module.exports = Users;
