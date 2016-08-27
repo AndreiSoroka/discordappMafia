@@ -1,0 +1,14 @@
+{
+  "name": "discordappmafia",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AndreiSoroka <unickpro@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^8.1.0"
+  }
+}
