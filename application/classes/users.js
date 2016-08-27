@@ -16,7 +16,6 @@ class Users {
         this._roles = roles;
         this._rolesAlliace = rolesAlliace;
         this._peoples = peoples || [];
-        this._generateMapUsers();
     }
 
     /**
@@ -28,7 +27,6 @@ class Users {
             return;
         }
         this._peoples.push(people);
-        this._generateMapUsers();
     }
 
     /**
@@ -71,6 +69,7 @@ class Users {
         }
 
         this._gameIsStarted = true;
+        this._generateMapUsers();
 
         return 1;
     }
@@ -106,16 +105,7 @@ class Users {
         }
         return this._peoples;
     }
-
-    /**
-     * Разблокировать чат
-     * @param id
-     * @param name
-     * @param group
-     */
-    unmuteChat({id, name, group}) {
-    }
-
+    
     /**
      *
      * P.s. Сложно объяснить такую простую вещь
@@ -141,16 +131,21 @@ class Users {
 
     /**
      * Получение случайного числа
-     * @param min
-     * @param max
+     * @param {number} min
+     * @param {number} max
      * @returns {number}
      * @private
      */
     _getRandomInt(min, max) {
-        var a = 3;
         return ~~(Math.random() * (max - min + 1) + min);
     }
 
+    /**
+     * Перемешивание массива
+     * @param {Array} array
+     * @returns {Array}
+     * @private
+     */
     _shuffle(array) {
         for (var i = array.length - 1; i > 0; i--) {
             var num = Math.floor(Math.random() * (i + 1));
