@@ -61,4 +61,9 @@ users.add({
     discordApp: {}
 });
 
-console.log(users.get({}));
+var myUser = users.get({id: 55});
+var myRole = ['d', 'g'];
+console.log(myUser);
+users.updateRole({id: 55, role: myRole});
+console.log(users.get({id: 55}));
+console.log(users.get({group: 'l'}));

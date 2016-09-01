@@ -84,7 +84,45 @@ class Users {
         this._peoplesGroup = {};
         this._peoples.forEach((people)=> {
             // для быстрого поиска со
-        })
+            this._peoplesName[people.name] = people;
+            this._peoplesId[people.id] = people;
+            people.group.forEach((role)=> {
+                (this._peoplesGroup[role])
+                    ? this._peoplesGroup[role].push(people)
+                    : this._peoplesGroup[role] = [people];
+            });
+        });
+    }
+
+    /**
+     * Обновить роль персонажу
+     * @param people
+     * @param id
+     * @param name
+     * @param role
+     * @returns {number}
+     */
+    updateRole({people, id, name, role}) {
+        if (!role) return -1;
+
+        if (people) {
+            people.group = role;
+        }
+        else if (id || name) {
+            let _people = this.get({id, name});
+            if (_people) {
+                _people.group = role;
+            }
+            else {
+                return -2
+            }
+        }
+        else {
+            return -3;
+        }
+
+        this._generateMapUsers();
+        return 1;
     }
 
     /**
@@ -95,17 +133,17 @@ class Users {
      */
     get({id, name, group}) {
         if (id) {
-            return null;
+            return this._peoplesId && this._peoplesId[id];
         }
         if (name) {
-            return null;
+            return this._peoplesName && this._peoplesName[name];
         }
         if (group) {
-            return [];
+            return this._peoplesGroup && this._peoplesGroup[group];
         }
         return this._peoples;
     }
-    
+
     /**
      *
      * P.s. Сложно объяснить такую простую вещь
