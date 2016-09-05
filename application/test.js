@@ -1,4 +1,5 @@
-const Users = require('./classes/Users');
+const Users = require('./classes/users');
+const World = require('./classes/world');
 const _ = require('lodash');
 
 // Могические распределение ролей для игры
@@ -88,3 +89,19 @@ function logConsole(isSuccessful, message) {
         console.error(`> ${message}... fail!`)
     }
 }
+
+////// ----------
+var day = {
+    start: function () {
+        console.log('start');
+        this.action();
+    },
+    end: function () {
+        console.log('end');
+    },
+    action: function () {
+        console.log('action');
+    },
+    time: 10
+};
+var world = new World([day]);
