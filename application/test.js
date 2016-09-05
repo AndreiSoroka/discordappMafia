@@ -66,44 +66,25 @@ users.add({
 logConsole(users.get({}).length == 6, 'count users is');
 
 // живых пользователей
-logConsole(users.get({role: 'l'}).length == 6, 'count users is');
+logConsole(users.get({role: 'l'}).length == 6, 'count lives users is');
 
 // Ищем пользователя с id 12 по имени Mercedes
 var userA = users.get({id: 12});
-if (userA && userA.name == 'Mercedes') {
-    console.log('search user Mercedes... successful');
-} else {
-    console.error('search user Mercedes... fail');
-}
+logConsole(userA && userA.name == 'Mercedes', 'search user Mercedes');
 
 // Убъем пользователя с id 12
 var newRoleUserA = _.without(userA.role, 'l');
 users.updateRole({id: 12, role: newRoleUserA});
-if (userA.role.indexOf('l') == -1) {
-    console.log('kill user id 12... successful');
-} else {
-    console.error('kill user id 12... fail');
-}
-
+logConsole(userA.role.indexOf('l') == -1, 'kill user id 12');
 
 // живых пользователей
-if (users.get({role: 'l'}).length == 5) {
-    console.log('count lives users is... successful');
-} else {
-    console.error('count lives users is... fail');
-}
+logConsole(users.get({role: 'l'}).length == 5, 'count lives users is');
 
-// var myUser = users.get({id: 55});
-// var myRole = ['d', 'g'];
-// console.log(myUser);
-// users.updateRole({id: 55, role: myRole});
-// console.log(users.get({id: 55}));
-// console.log(users.get({group: 'l'}));
 
 function logConsole(isSuccessful, message) {
     if (isSuccessful) {
         console.log(`> ${message}... successful!`)
     } else {
-        console.log(`> ${message}... fail!`)
+        console.error(`> ${message}... fail!`)
     }
 }
