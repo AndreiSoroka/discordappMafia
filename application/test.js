@@ -95,13 +95,15 @@ var day = {
     start: function () {
         console.log('start');
         this.action();
+        return true;
     },
     end: function () {
         console.log('end');
+        return false;
     },
     action: function () {
         console.log('action');
     },
-    time: 10
+    time: 2
 };
 var world = new World([day]);

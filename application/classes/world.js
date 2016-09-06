@@ -45,14 +45,13 @@ class World {
         var {start, end, time = 60} = step;
 
         this._timeoutId = setTimeout(()=> {
-            end.apply(step);
-
-            this._timeoutId = setTimeout(()=> {
+            if (end.apply(step))
                 this._makeStep(this._getNextStep());
-            }, 1);
         }, time * 1000);
 
-        start.apply(step);
+        if (!start.apply(step)){
+            this.stop();
+        }
     }
 
     /**
