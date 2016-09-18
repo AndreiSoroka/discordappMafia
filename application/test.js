@@ -90,20 +90,59 @@ function logConsole(isSuccessful, message) {
     }
 }
 
-////// ----------
-var day = {
-    start: function () {
-        console.log('start');
-        this.action();
-        return true;
-    },
-    end: function () {
-        console.log('end');
-        return false;
-    },
-    action: function () {
-        console.log('action');
-    },
-    time: 2
-};
-var world = new World([day]);
+////// Мир работает как часы
+var idTimeoutWorld;
+var promiseWorld = new Promise((resolve, reject) => {
+
+// На случай, если мир не работает
+    idTimeoutWorld = setTimeout(function () {
+        reject();
+    }, 4500);
+
+// создаем мир
+    var countActions = 0;
+    var day = {
+        start: function () {
+            ++countActions;
+            console.log('start day');
+            this.action();
+            return true;
+        },
+        end: function () {
+            ++countActions;
+            console.log('end day');
+            return true;
+        },
+        action: function () {
+            ++countActions;
+            console.log('action day');
+        },
+        time: 2
+    };
+    var night = {
+        start: function () {
+            ++countActions;
+            console.log('start night');
+            return true;
+        },
+        end: function () {
+            ++countActions;
+            console.log('end night');
+            if (countActions == 5) {
+                resolve();
+            }
+            return false;
+        },
+        time: 2
+    };
+    // запускаем мир
+    new World([day, night]);
+});
+promiseWorld.then(()=> {
+    clearTimeout(idTimeoutWorld);
+    logConsole(true, 'process world')
+}, ()=> {
+    logConsole(false, 'process world')
+});
+
+
