@@ -1,6 +1,7 @@
 const Users = require('./classes/users');
 const World = require('./classes/world');
 const _ = require('lodash');
+const conf = require('./conf/app.json');
 
 // Могические распределение ролей для игры
 // это значит каждой роли по 1 штуке + в относительном кол-ве дополнительных ролей
@@ -91,11 +92,11 @@ function logConsole(isSuccessful, message) {
 }
 
 ////// Мир работает как часы
-var idTimeoutWorld;
+
 var promiseWorld = new Promise((resolve, reject) => {
 
 // На случай, если мир не работает
-    idTimeoutWorld = setTimeout(function () {
+    var idTimeoutWorld = setTimeout(function () {
         reject();
     }, 4500);
 
@@ -129,6 +130,7 @@ var promiseWorld = new Promise((resolve, reject) => {
             ++countActions;
             console.log('end night');
             if (countActions == 5) {
+                clearTimeout(idTimeoutWorld);
                 resolve();
             }
             return false;
@@ -139,10 +141,38 @@ var promiseWorld = new Promise((resolve, reject) => {
     new World([day, night]);
 });
 promiseWorld.then(()=> {
-    clearTimeout(idTimeoutWorld);
     logConsole(true, 'process world')
 }, ()=> {
     logConsole(false, 'process world')
 });
 
 
+// проверяем подключение к discord
+const Discord = require('discord.js');
+
+var promiseDiscord = new Promise((resolve, reject) => {
+    var client = new Discord.Client();
+
+    // На случай, если дискорд задумается
+    var idTimeoutDiscord = setTimeout(function () {
+        reject();
+    }, 4500);
+
+    client.on('ready', () => {
+        clearTimeout(idTimeoutDiscord);
+        client.destroy();
+        resolve();
+    });
+
+    client.on('error', (error) => {
+        clearTimeout(idTimeoutDiscord);
+        reject();
+    });
+
+    client.login(conf.token);
+});
+promiseWorld.then(()=> {
+    logConsole(true, 'connect discord')
+}, ()=> {
+    logConsole(false, 'connect discord')
+});
