@@ -49,7 +49,7 @@ class World {
                 this._makeStep(this._getNextStep());
         }, time * 1000);
 
-        if (!start.apply(step)){
+        if (!start.apply(step)) {
             this.stop();
         }
     }
@@ -69,6 +69,11 @@ class World {
      */
     stop() {
         clearTimeout(this._timeoutId);
+    }
+
+    action() {
+        var step = this._iterations[this._numIteration];
+        step.action.apply(step, arguments);
     }
 
 }

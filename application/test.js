@@ -1,7 +1,7 @@
 const Users = require('./classes/users');
 const World = require('./classes/world');
 const _ = require('lodash');
-const conf = require('./conf/app.json');
+const conf = require('./config/app.json');
 
 // Могические распределение ролей для игры
 // это значит каждой роли по 1 штуке + в относительном кол-ве дополнительных ролей
